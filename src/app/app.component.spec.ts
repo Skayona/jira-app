@@ -1,13 +1,31 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { IUser } from './models/user';
+import { from } from 'rxjs';
 
 describe('AppComponent', () => {
+  const input: IUser[] = [
+    { admin: true, age: 19, familyName: 'Snow', name: 'John' }
+  ];
+
+  const data = from(input);
+
+  const collectionStub = {
+    valueChanges: jasmine.createSpy('valueChanges').and.returnValue(data)
+  };
+
+  const AngularFirestoreStub = {
+    collection: jasmine.createSpy('collection').and.returnValue(collectionStub)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
+      providers: [ { provide: AngularFirestore, useValue: AngularFirestoreStub } ],
       declarations: [
         AppComponent
       ],
@@ -26,10 +44,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('jiraApp');
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to jiraApp!');
-  });
 });

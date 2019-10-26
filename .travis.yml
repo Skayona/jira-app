@@ -1,0 +1,28 @@
+language: node_js
+dist: trusty
+sudo: required
+node_js:
+ - '10'
+
+before_install:
+ - export CHROME_BIN=chromium-browser
+ - export DISPLAY=:99.0
+ - npm install -g @angular/cli
+services:
+ - xvfb
+install: npm install
+
+branches:
+ only:
+  - master
+
+deploy:
+ provider: heroku
+ api_key:
+  secure: "46de7f1d-dbb4-4a76-b758-02b576ae40b3"
+ app: jira-atl
+ on:
+  branch: master
+
+addons:
+ chrome: stable
