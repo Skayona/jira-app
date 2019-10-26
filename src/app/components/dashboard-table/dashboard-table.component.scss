@@ -1,0 +1,32 @@
+.jr-table {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  column-gap: 8px;
+}
+
+.jr-table-col {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  row-gap: 8px;
+}
+
+.jr-table-heading {
+  padding: 4px 8px;
+  color: #5E6C84;
+  border-radius: 4px;
+  background: #F4F5F7;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.jr-table-list {
+  height: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  background: #F4F5F7;
+
+  >*+* {
+    margin-top: 4px;
+  }
+}

@@ -1,8 +1,12 @@
-<ul>
-  <li class="text" *ngFor="let item of items$|async">
-    {{ item | json }}
-  </li>
-</ul>
+<header>
+  <div class="container">
+    <a [routerLink]="['/']">
+      <img src="../assets/Jira Software-blue.svg" alt="JiraApp" width="200" height="26" />
+    </a>
+  </div>
+</header>
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
 
 
-<router-outlet></router-outlet>

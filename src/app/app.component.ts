@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-
-import { IUser } from './models/user';
+import { IUser } from './store/models/user';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +17,6 @@ export class AppComponent {
     private db: AngularFirestore
   ) {
     this.items$ = db.collection<IUser>('users').valueChanges();
-    // db.collection('users').get().forEach(console.log);
+    this.items$.subscribe(console.log);
   }
 }

@@ -1,0 +1,17 @@
+:host {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto minmax(0, 1fr);
+  background-color: #fff;
+}
+
+header {
+  padding: 16px;
+  background: #0747A6;
+  color: #DEEBFF;
+}
+
+main {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}

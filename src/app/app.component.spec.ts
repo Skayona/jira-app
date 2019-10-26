@@ -2,12 +2,12 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { IUser } from './models/user';
 import { from } from 'rxjs';
+import { IUser } from './store/models/user';
 
 describe('AppComponent', () => {
   const input: IUser[] = [
-    { admin: true, age: 19, familyName: 'Snow', name: 'John' }
+    { familyName: 'Snow', name: 'John' }
   ];
 
   const data = from(input);
