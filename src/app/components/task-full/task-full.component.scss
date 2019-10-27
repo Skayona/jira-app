@@ -1,0 +1,51 @@
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  grid-template-areas: 'title actions''description info';
+  column-gap: 32px;
+  row-gap: 16px;
+}
+
+.title {
+  grid-area: title;
+  margin-bottom: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.description {
+  grid-area: description;
+}
+
+.actions {
+  grid-area: actions;
+
+  button+button {
+    margin-left: 8px;
+  }
+}
+
+.info {
+  grid-area: info;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  p>* {
+    display: block;
+  }
+
+  p>strong {
+    margin-bottom: 4px;
+    color: rgb(94, 108, 132);
+  }
+
+  p>span {
+    font-size: 13px;
+  }
+
+  p+p {
+    margin-top: 8px;
+  }
+}

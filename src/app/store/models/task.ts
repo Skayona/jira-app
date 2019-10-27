@@ -1,4 +1,5 @@
 import { ILabel } from './label';
+import { IIsueType } from './isue-type';
 
 export interface ITask {
   id: string;
@@ -7,4 +8,6 @@ export interface ITask {
   description: string;
   deadline: string;
   label: ILabel;
+  reporter: string;
+  type: IIsueType;
 }

@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskCardComponent } from './task-card.component';
+import { TooltipModule } from 'ngx-bootstrap';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskCardComponent', () => {
   let component: TaskCardComponent;
@@ -8,7 +10,8 @@ describe('TaskCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaskCardComponent ]
+      declarations: [ TaskCardComponent ],
+      imports: [ TooltipModule.forRoot(), RouterTestingModule ]
     })
     .compileComponents();
   }));

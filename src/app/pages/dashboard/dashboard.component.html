@@ -1,2 +1,6 @@
 <app-dashboard-nav></app-dashboard-nav>
-<app-dashboard-table></app-dashboard-table>
+<app-dashboard-table
+  [loading]="loading$ | async"
+  [tasks]="tasks$ | async"
+  [error]="error$ | async"
+></app-dashboard-table>

@@ -4,6 +4,11 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardNavComponent } from 'src/app/components/dashboard-nav/dashboard-nav.component';
 import { DashboardTableComponent } from 'src/app/components/dashboard-table/dashboard-table.component';
 import { TaskCardComponent } from 'src/app/components/task-card/task-card.component';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
+import { TooltipModule } from 'ngx-bootstrap';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { appState } from 'src/app/store';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -11,7 +16,15 @@ describe('DashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardComponent, DashboardNavComponent, DashboardTableComponent, TaskCardComponent ]
+      declarations: [
+        DashboardComponent,
+        DashboardNavComponent,
+        DashboardTableComponent,
+        TaskCardComponent,
+        LoadingComponent
+      ],
+      imports: [ TooltipModule, RouterTestingModule, StoreModule.forRoot(appState) ],
+      providers: [Store]
     })
     .compileComponents();
   }));

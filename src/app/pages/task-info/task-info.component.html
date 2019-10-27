@@ -1,6 +1,4 @@
-<h2>Title</h2>
-<p>Task number</p>
-<div>Status | Type</div>
-<div>ASSIGNEE | REPORTER</div>
-<h3>Description:</h3>
-<div>some description</div>
+<app-loading *ngIf="loading$ | async"></app-loading>
+<app-task-full
+  [task]="task$ | async"
+></app-task-full>

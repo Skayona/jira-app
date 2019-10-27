@@ -1,3 +1,7 @@
+:host {
+  position: relative;
+}
+
 .jr-table {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));

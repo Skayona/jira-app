@@ -1,6 +1,7 @@
 :host {
   display: grid;
   min-height: 100%;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, auto);
+  align-content: flex-start;
   row-gap: 32px;
 }

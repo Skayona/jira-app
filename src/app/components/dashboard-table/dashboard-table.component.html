@@ -1,10 +1,13 @@
+<app-loading *ngIf="loading"></app-loading>
 <div class="jr-table">
   <div class="jr-table-col">
     <div class="jr-table-heading">
       <span>TO DO</span>
     </div>
     <div class="jr-table-list">
-      <app-task-card></app-task-card>
+      <app-task-card *ngFor="let task of getTasks('TO_DO')"
+        [task]="task"
+      ></app-task-card>
     </div>
   </div>
   <div class="jr-table-col">
@@ -12,9 +15,9 @@
       <span>IN PROGRESS</span>
     </div>
     <div class="jr-table-list">
-      <app-task-card></app-task-card>
-      <app-task-card></app-task-card>
-      <app-task-card></app-task-card>
+      <app-task-card *ngFor="let task of getTasks('IN_PROGRESS')"
+        [task]="task"
+      ></app-task-card>
     </div>
   </div>
   <div class="jr-table-col">
@@ -22,6 +25,9 @@
       <span>REVIEW</span>
     </div>
     <div class="jr-table-list">
+      <app-task-card *ngFor="let task of getTasks('REVIEW')"
+        [task]="task"
+      ></app-task-card>
     </div>
   </div>
   <div class="jr-table-col">
@@ -29,6 +35,9 @@
       <span>QA</span>
     </div>
     <div class="jr-table-list">
+      <app-task-card *ngFor="let task of getTasks('QA')"
+        [task]="task"
+      ></app-task-card>
     </div>
   </div>
   <div class="jr-table-col">
@@ -36,6 +45,9 @@
       <span>DONE</span>
     </div>
     <div class="jr-table-list">
+      <app-task-card *ngFor="let task of getTasks('DONE')"
+        [task]="task"
+      ></app-task-card>
     </div>
   </div>
 </div>

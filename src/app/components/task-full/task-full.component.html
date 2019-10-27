@@ -1,0 +1,31 @@
+<h2 class="title">{{ task?.title }}</h2>
+<div class="actions">
+  <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+  <button type="button" class="btn btn-info" (click)="edit()">Edit</button>
+</div>
+<div class="description">
+  <h6>Description:</h6>
+  <div>{{ task?.description || '-' }}</div>
+</div>
+<div class="info">
+  <p>
+    <strong>Status</strong>
+    <span>{{ label[task?.label]}}</span>
+  </p>
+  <p>
+    <strong>Type</strong>
+    <span>{{ task?.type }}</span>
+  </p>
+  <p>
+    <strong>Deadline</strong>
+    <span>{{ task?.deadline || '-' }}</span>
+  </p>
+  <p>
+    <strong>ASSIGNEE</strong>
+    <span>{{ task?.assignee || '-' }}</span>
+  </p>
+  <p>
+    <strong>REPORTER</strong>
+    <span>{{ task?.reporter || '-' }}</span>
+  </p>
+</div>
