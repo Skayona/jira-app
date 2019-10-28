@@ -24,6 +24,9 @@ const routes: Routes = [{
 }, {
   path: 'search-results',
   component: SearchResultsComponent
+}, {
+  path: 'lazy',
+  loadChildren: './lazy/lazy.module#LazyModule'
 }];
 
 @NgModule({
