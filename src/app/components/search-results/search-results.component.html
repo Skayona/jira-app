@@ -4,7 +4,7 @@
       <strong>{{ task.title }}</strong> / {{ task.deadline | date: 'dd.MM.yyyy' }} / {{ task.type }}
     </a>
   </li>
-  <li *ngIf="!searchResults.length">
+  <li *ngIf="!searchResults?.length">
     No serach results...
   </li>
 </ul>

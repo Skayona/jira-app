@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskFullComponent } from './task-full.component';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { Store, StoreModule } from '@ngrx/store';
+import { appState } from 'src/app/store';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TaskFullComponent', () => {
   let component: TaskFullComponent;
@@ -10,7 +13,8 @@ describe('TaskFullComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TaskFullComponent ],
-      providers: [{ provide: BsModalService }]
+      imports: [StoreModule.forRoot(appState), RouterTestingModule],
+      providers: [{ provide: BsModalService }, Store, BsModalRef]
     })
     .compileComponents();
   }));

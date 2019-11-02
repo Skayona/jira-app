@@ -7,7 +7,11 @@ import { from } from 'rxjs';
 
 describe('JiraService', () => {
   const input: IUser[] = [
-    { familyName: 'Snow', name: 'John' }
+    {
+      displayName: 'John Snow',
+      id: '1',
+      uid: '1'
+     }
   ];
 
   const data = from(input);
