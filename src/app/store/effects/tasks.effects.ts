@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType, Effect } from '@ngrx/effects';
-import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { map, mergeMap, catchError, switchMap, pluck, take } from 'rxjs/operators';
 import { JiraService } from 'src/app/services/jira.service';
 import { ITask } from '../models/task';
-import { TasksLoaded, GetTasks, TasksLoadingError, GetTask, TaskLoaded, TaskLoadingError } from '../actions/tasks.actions';
+import { TasksLoaded, GetTasks, GetTask, TaskLoaded, TasksDefault, CreateTask, TasksError, UpdateTask, DeleteTask } from '../actions/tasks.actions';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState, selectTasks } from '..';
+import { AppState } from '..';
 
 
 @Injectable()
-export class JiraEffects {
+export class TasksEffects {
   getTasks$ = createEffect(() => this.actions$.pipe(
     ofType(GetTasks.type),
-    mergeMap(() => this.store.select(selectTasks)),
+    mergeMap(() => this.store.pipe(
+      pluck('tasksState', 'tasks'),
+      take(1)
+    )),
     switchMap((storedTasks) => {
-      if (storedTasks.length) {
-        return of(TasksLoaded({ tasks: storedTasks}));
+      if (storedTasks) {
+        return of(TasksDefault());
       }
       return this.jiraService.getTasks().pipe(
-          map((res: any[]) => {
-            console.log(1);
 
+          map((res: any[]) => {
             const tasks: ITask[] = res.map((item) => {
               return {
                 ...item.payload.doc.data(),
@@ -30,7 +32,7 @@ export class JiraEffects {
             });
             return TasksLoaded({ tasks });
           }),
-          catchError((err) => of(TasksLoadingError(err)))
+          catchError((err) => of(TasksError(err)))
         );
       })
     )
@@ -48,7 +50,37 @@ export class JiraEffects {
           };
           return TaskLoaded({ task });
         }),
-        catchError((err) => of(TaskLoadingError(err)))
+        catchError((err) => of(TasksError(err)))
+      ))
+    )
+  );
+
+  createTask$ = createEffect(() => this.actions$.pipe(
+    ofType(CreateTask.type),
+    mergeMap(({ task }) => this.jiraService.createTask(task)
+      .pipe(
+        map(() => TasksDefault()),
+        catchError((err) => of(TasksError(err)))
+      ))
+    )
+  );
+
+  updateTask$ = createEffect(() => this.actions$.pipe(
+    ofType(UpdateTask.type),
+    mergeMap(({ taskId, task }) => this.jiraService.updateTask(taskId, task)
+      .pipe(
+        map(() => TasksDefault()),
+        catchError((err) => of(TasksError(err)))
+      ))
+    )
+  );
+
+  deleteTask$ = createEffect(() => this.actions$.pipe(
+    ofType(DeleteTask.type),
+    mergeMap(({ taskId }) => this.jiraService.deleteTask(taskId)
+      .pipe(
+        map(() => TasksDefault()),
+        catchError((err) => of(TasksError(err)))
       ))
     )
   );

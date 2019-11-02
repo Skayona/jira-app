@@ -20,7 +20,7 @@ export class ConfirmModalComponent implements OnInit {
   }
 
   save() {
-
+    this.onConfirm();
   }
 
   public onConfirm(): void {

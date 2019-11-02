@@ -11,6 +11,11 @@ header {
   color: #DEEBFF;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
 main {
   padding-top: 48px;
   padding-bottom: 48px;

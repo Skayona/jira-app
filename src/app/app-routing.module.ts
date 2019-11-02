@@ -1,32 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/login/login.component';
 import { SearchResultsComponent } from './pages/search-results/search-results.component';
-import { TaskInfoComponent } from './pages/task-info/task-info.component';
 
 
 const routes: Routes = [{
   path: '',
-  children: [
-    {
-      path: '',
-      pathMatch: 'full',
-      component: DashboardComponent,
-    }, {
-      path: 'task/:taskId',
-      component: TaskInfoComponent,
-    }
-  ]
+  pathMatch: 'full',
+  redirectTo: 'dashboard'
+}, {
+  path: 'dashboard',
+  loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
+}, {
+  path: 'task/:taskId',
+  loadChildren: './pages/task-info/task-info.module#TaskInfoModule'
 }, {
   path: 'login',
   component: LoginComponent
 }, {
   path: 'search-results',
   component: SearchResultsComponent
-}, {
-  path: 'lazy',
-  loadChildren: './lazy/lazy.module#LazyModule'
 }];
 
 @NgModule({

@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { IUser } from '../store/models/user';
 import { ITask } from '../store/models/task';
 import { IIsueType } from '../store/models/isue-type';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +33,13 @@ export class JiraService {
   }
 
   createTask(task: ITask) {
-    return this.db.collection('tasks').add({ ...task });
+    return of(this.db.collection('tasks').add({ ...task }));
   }
 
-  updateTask(taskId: string, value) {
-    return this.db.collection('tasks').doc(taskId).set(value);
+  updateTask(taskId: string, task: ITask) {
+    console.log(task);
+
+    return of(this.db.collection('tasks').doc(taskId).set(task));
   }
 
   // searchUsers(searchValue){
@@ -50,7 +53,7 @@ export class JiraService {
   // }
 
   deleteTask(taskId: string) {
-    return this.db.collection('tasks').doc(taskId).delete();
+    return of(this.db.collection('tasks').doc(taskId).delete());
   }
 
   getTasks() {

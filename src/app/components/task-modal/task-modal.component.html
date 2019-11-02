@@ -1,15 +1,60 @@
 <div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title">{{ title }}</h5>
-    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Modal body text goes here.</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Close</button>
-    <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
-  </div>
+  <form
+    #ngForm="ngForm"
+    [formGroup]="form"
+    [class.was-submited]="ngForm.submitted"
+    (submit)="save()"
+  >
+    <div class="modal-header">
+      <h5 class="modal-title">{{ title }}</h5>
+      <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="issue-type">Issue type*:</label>
+        <select class="form-control" id="issue-type" formControlName="type">
+          <option *ngFor="let type of issueTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="issue-progress">Issue progress*:</label>
+        <select class="form-control" id="issue-progress" formControlName="label">
+          <option *ngFor="let progress of issueProgress" [value]="progress">{{ progress }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="issue-title">Title*:</label>
+        <input type="text" class="form-control" id="issue-title" formControlName="title" placeholder="Enter title">
+      </div>
+      <div class="form-group">
+        <label for="issue-description">Description*:</label>
+        <textarea class="form-control" id="issue-description" formControlName="description" rows="3" placeholder="Enter description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="issue-assignee">Assign to*:</label>
+        <select class="form-control" id="issue-assignee" formControlName="assignee">
+          <option *ngFor="let user of users" [value]="user.id">{{ user.name + ' ' + user.familyName }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="isue-deadline">Due date*:</label>
+        <input type="text"
+            formControlName="deadline"
+            placeholder="Select day"
+            class="form-control"
+            id="isue-deadline"
+            placement="top"
+            [minDate]="minDate"
+            [bsConfig]="bsConfig"
+            bsDatepicker
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Close</button>
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+  </form>
 </div>

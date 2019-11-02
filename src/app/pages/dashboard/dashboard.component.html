@@ -1,4 +1,6 @@
-<app-dashboard-nav></app-dashboard-nav>
+<app-dashboard-nav
+  [users]="users$ | async"
+></app-dashboard-nav>
 <app-dashboard-table
   [loading]="loading$ | async"
   [tasks]="tasks$ | async"

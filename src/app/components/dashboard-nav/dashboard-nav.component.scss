@@ -1,0 +1,10 @@
+.filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  column-gap: 16px;
+  align-items: flex-end;
+
+  > * {
+    margin-bottom: 0;
+  }
+}

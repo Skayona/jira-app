@@ -1,24 +1,36 @@
 import { createSelector } from '@ngrx/store';
-import { TasksReducerState, tasksReducer } from './reducers/jira.reducers';
-import { JiraEffects } from './effects/tasks.effects';
+import { TasksReducerState, tasksReducer } from './reducers/tasks.reducers';
+import { TasksEffects } from './effects/tasks.effects';
+import { UsersReducerState, usersReducer } from './reducers/users.reducer';
+import { UsersEffect } from './effects/users.effects';
 
 export interface AppState {
   tasksState: TasksReducerState;
+  usersState: UsersReducerState;
 }
 
 export const appEffects = [
-  JiraEffects
+  TasksEffects, UsersEffect
 ];
 
 export const appState = {
-  tasksState: tasksReducer
+  tasksState: tasksReducer,
+  usersState: usersReducer,
 };
 
 const selectTasksState = (state: AppState) => state.tasksState;
+const selectUsersState = (state: AppState) => state.usersState;
 
+
+// tasks
 export const selectTasks = createSelector(
   selectTasksState,
   (state: TasksReducerState) => state.tasks
+);
+
+export const selectTask = createSelector(
+  selectTasksState,
+  (state: TasksReducerState) => state.task
 );
 
 export const selectTasksError = createSelector(
@@ -31,8 +43,24 @@ export const selectTasksLoading = createSelector(
   (state: TasksReducerState) => state.loading
 );
 
-
-export const selectTask = createSelector(
-  selectTasksState,
-  (state: TasksReducerState) => state.task
+// users
+export const selectUsers = createSelector(
+  selectUsersState,
+  (state: UsersReducerState) => state.users
 );
+
+export const selectUser = createSelector(
+  selectUsersState,
+  (state: UsersReducerState) => state.user
+);
+
+export const selectUsersError = createSelector(
+  selectUsersState,
+  (state: UsersReducerState) => state.error
+);
+
+export const selectUsersLoading = createSelector(
+  selectUsersState,
+  (state: UsersReducerState) => state.loading
+);
+

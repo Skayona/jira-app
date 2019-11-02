@@ -1,16 +1,33 @@
-<div>
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search by Task name" aria-label="Search by Task name" aria-describedby="button-addon2">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
-    </div>
+<div class="mb-3 text-right">
+  <button class="btn btn-success" (click)="createTask()">Create new task</button>
+</div>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Search by Task name" aria-label="Search by Task name"
+    aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
   </div>
-  <button type="button" class="btn btn-primary">
+</div>
+<div class="filters">
+  <button type="button" class="btn btn-outline-primary">
     Only My Issues
   </button>
-  <button type="button" class="btn btn-primary">
+  <button type="button" class="btn btn-outline-primary">
     Assigned by Me
   </button>
-  <span>User Issues(dropdown)</span>
-  <span>Assigned by User on Me(dropdown)</span>
+  <div class="form-group" *ngIf="users">
+    <label for="user-issues">User Issues</label>
+    <select class="form-control" id="user-issues">
+      <option disabled>select user</option>
+      <option [value]="users.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+    </select>
+  </div>
+  <div class="form-group" *ngIf="users">
+    <label for="user-assigned">Assigned by User</label>
+    <select class="form-control" id="user-assigned">
+      <option disabled>select user</option>
+      <option [value]="users.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-secondary">Clear filters</button>
 </div>

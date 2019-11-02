@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { ITask } from '../models/task';
-import { GetTasks, TasksLoaded, TasksLoadingError, GetTask, TaskLoaded, TaskLoadingError } from '../actions/tasks.actions';
+import { GetTasks, TasksLoaded, GetTask, TaskLoaded, TasksDefault, TasksError } from '../actions/tasks.actions';
 
 export interface TasksReducerState {
   tasks: ITask[];
@@ -10,7 +10,7 @@ export interface TasksReducerState {
 }
 
 export const initialState: TasksReducerState = {
-  tasks: [],
+  tasks: null,
   task: null,
   loading: false,
   error: false,
@@ -30,7 +30,7 @@ export const tasksReducerState = createReducer(initialState,
       tasks: payload.tasks
     };
   }),
-  on(TasksLoadingError, (state, payload) => {
+  on(TasksError, (state, payload) => {
     return {
       ...state,
       loading: false,
@@ -50,11 +50,11 @@ export const tasksReducerState = createReducer(initialState,
       task: payload.task
     };
   }),
-  on(TaskLoadingError, (state, payload) => {
+  on(TasksDefault, (state) => {
     return {
       ...state,
       loading: false,
-      error: payload.err
+      error: false
     };
   }),
 );

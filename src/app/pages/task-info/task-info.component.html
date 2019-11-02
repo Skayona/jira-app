@@ -1,4 +1,5 @@
 <app-loading *ngIf="loading$ | async"></app-loading>
 <app-task-full
   [task]="task$ | async"
+  [users]="users$ | async"
 ></app-task-full>

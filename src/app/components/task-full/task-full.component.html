@@ -3,29 +3,33 @@
   <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
   <button type="button" class="btn btn-info" (click)="edit()">Edit</button>
 </div>
-<div class="description">
-  <h6>Description:</h6>
-  <div>{{ task?.description || '-' }}</div>
+<div class="description card">
+  <div class="card-body">
+    <h6>Description:</h6>
+    <div>{{ task?.description || '-' }}</div>
+  </div>
 </div>
-<div class="info">
-  <p>
-    <strong>Status</strong>
-    <span>{{ label[task?.label]}}</span>
-  </p>
-  <p>
-    <strong>Type</strong>
-    <span>{{ task?.type }}</span>
-  </p>
-  <p>
-    <strong>Deadline</strong>
-    <span>{{ task?.deadline || '-' }}</span>
-  </p>
-  <p>
-    <strong>ASSIGNEE</strong>
-    <span>{{ task?.assignee || '-' }}</span>
-  </p>
-  <p>
-    <strong>REPORTER</strong>
-    <span>{{ task?.reporter || '-' }}</span>
-  </p>
+<div class="info card">
+  <div class="card-body">
+    <p>
+      <strong>Status</strong>
+      <span>{{ label[task?.label]}}</span>
+    </p>
+    <p>
+      <strong>Type</strong>
+      <span>{{ task?.type }}</span>
+    </p>
+    <p>
+      <strong>Deadline</strong>
+      <span>{{ (task?.deadline | date: 'dd.MM.yyyy') || '-' }}</span>
+    </p>
+    <p>
+      <strong>Assignee</strong>
+      <span>{{ task?.assignee?.name + ' ' + task?.assignee?.familyName || '-' }}</span>
+    </p>
+    <p>
+      <strong>Reporter</strong>
+      <span>{{ task?.reporter?.name + ' ' + task?.reporter?.familyName || '-' }}</span>
+    </p>
+  </div>
 </div>
