@@ -46,13 +46,24 @@ export class JiraService {
       .snapshotChanges();
   }
 
+  searchTasksByReporterId(id) {
+    return this.db.collection('tasks', (ref) => ref.where('reporter.id', '>=', id)
+      .where('reporter.id', '<=', id + '\uf8ff'))
+      .snapshotChanges();
+  }
+
+  searchTasksByAssigneeId(id) {
+    return this.db.collection('tasks', (ref) => ref.where('assignee.id', '>=', id)
+      .where('assignee.id', '<=', id + '\uf8ff'))
+      .snapshotChanges();
+  }
+
   deleteTask(taskId: string) {
     return of(this.db.collection('tasks').doc(taskId).delete());
   }
 
   getTasks() {
     return this.db.collection('tasks').snapshotChanges();
-    // return this.db.collection('tasks', ref => ref.orderBy('label').startAt(type)).snapshotChanges();
   }
 
   getTask(taskId: string) {

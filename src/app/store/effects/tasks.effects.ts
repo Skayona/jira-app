@@ -3,7 +3,19 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, catchError, switchMap, pluck, take } from 'rxjs/operators';
 import { JiraService } from 'src/app/services/jira.service';
 import { ITask } from '../models/task';
-import { TasksLoaded, GetTasks, GetTask, TaskLoaded, TasksDefault, CreateTask, TasksError, UpdateTask, DeleteTask } from '../actions/tasks.actions';
+import {
+  TasksLoaded,
+  GetTasks,
+  GetTask,
+  TaskLoaded,
+  TasksDefault,
+  CreateTask,
+  TasksError,
+  UpdateTask,
+  DeleteTask,
+  GetTasksByAssignee,
+  GetTasksByReporter
+} from '../actions/tasks.actions';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '..';
@@ -11,6 +23,8 @@ import { AppState } from '..';
 
 @Injectable()
 export class TasksEffects {
+  wasFiltered = false;
+
   getTasks$ = createEffect(() => this.actions$.pipe(
     ofType(GetTasks.type),
     mergeMap(() => this.store.pipe(
@@ -18,11 +32,11 @@ export class TasksEffects {
       take(1)
     )),
     switchMap((storedTasks) => {
-      if (storedTasks) {
+      if (!this.wasFiltered && storedTasks) {
         return of(TasksDefault());
       }
+      this.wasFiltered = false;
       return this.jiraService.getTasks().pipe(
-
           map((res: any[]) => {
             const tasks: ITask[] = res.map((item) => {
               return {
@@ -38,6 +52,45 @@ export class TasksEffects {
     )
   );
 
+  getTasksByAssignee$ = createEffect(() => this.actions$.pipe(
+    ofType(GetTasksByAssignee.type),
+    mergeMap(({ assigneeId }) => {
+      this.wasFiltered = true;
+      return this.jiraService.searchTasksByAssigneeId(assigneeId).pipe(
+          map((res: any[]) => {
+            const tasks: ITask[] = res.map((item) => {
+              return {
+                ...item.payload.doc.data(),
+                id: item.payload.doc.id
+              };
+            });
+            return TasksLoaded({ tasks });
+          }),
+          catchError((err) => of(TasksError(err)))
+        );
+      })
+    )
+  );
+
+  getTasksByReporter$ = createEffect(() => this.actions$.pipe(
+    ofType(GetTasksByReporter.type),
+    switchMap(({ reporterId }) => {
+      this.wasFiltered = true;
+      return this.jiraService.searchTasksByReporterId(reporterId).pipe(
+          map((res: any[]) => {
+            const tasks: ITask[] = res.map((item) => {
+              return {
+                ...item.payload.doc.data(),
+                id: item.payload.doc.id
+              };
+            });
+            return TasksLoaded({ tasks });
+          }),
+          catchError((err) => of(TasksError(err)))
+        );
+      })
+    )
+  );
 
   getTask$ = createEffect(() => this.actions$.pipe(
     ofType(GetTask.type),

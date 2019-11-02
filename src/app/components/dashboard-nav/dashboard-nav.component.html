@@ -24,18 +24,16 @@
     Assigned by Me
   </button>
   <div class="form-group" *ngIf="users">
-    <label for="user-issues">User Issues</label>
-    <select class="form-control" id="user-issues">
-      <option disabled>select user</option>
+    <label for="user-issues">Assignee</label>
+    <select class="form-control" id="user-issues" [formControl]="searchByAssignee">
       <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
     </select>
   </div>
   <div class="form-group" *ngIf="users">
-    <label for="user-assigned">Assigned by User</label>
-    <select class="form-control" id="user-assigned">
-      <option disabled>select user</option>
+    <label for="user-assigned">Reporter</label>
+    <select class="form-control" id="user-assigned" [formControl]="searchByReporter">
       <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
     </select>
   </div>
-  <button type="button" class="btn btn-secondary">Clear filters</button>
+  <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear filters</button>
 </div>

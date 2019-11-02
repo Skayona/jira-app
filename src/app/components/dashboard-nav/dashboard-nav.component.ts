@@ -4,9 +4,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { AppState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { CreateTask } from 'src/app/store/actions/tasks.actions';
+import { CreateTask, GetTasksByAssignee, GetTasksByReporter, GetTasks } from 'src/app/store/actions/tasks.actions';
 import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ITask } from 'src/app/store/models/task';
 import { JiraService } from 'src/app/services/jira.service';
@@ -23,6 +23,8 @@ export class DashboardNavComponent implements OnInit {
   modalRef: BsModalRef;
   searchQuery: FormControl;
   searchResults$: Observable<ITask[]>;
+  searchByAssignee: FormControl;
+  searchByReporter: FormControl;
 
   constructor(
     private modalService: BsModalService,
@@ -30,6 +32,8 @@ export class DashboardNavComponent implements OnInit {
     private jiraService: JiraService
   ) {
     this.searchQuery = new FormControl('');
+    this.searchByAssignee = new FormControl('');
+    this.searchByReporter = new FormControl('');
   }
 
   ngOnInit() {
@@ -44,6 +48,22 @@ export class DashboardNavComponent implements OnInit {
         } as ITask;
       }))
     );
+
+    this.searchByAssignee.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter(Boolean),
+    ).subscribe((id: string) => {
+      this.getTaskByAssignee(id);
+    });
+
+    this.searchByReporter.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter(Boolean),
+    ).subscribe((id: string) => {
+      this.getTaskByReporter(id);
+    });
   }
 
   createTask() {
@@ -66,6 +86,22 @@ export class DashboardNavComponent implements OnInit {
 
   clearSearchResults() {
     this.searchQuery.setValue('');
+  }
+
+  getTaskByAssignee(assigneeId: string) {
+    this.searchByReporter.setValue('');
+    this.store.dispatch(GetTasksByAssignee({ assigneeId }));
+  }
+
+  getTaskByReporter(reporterId: string) {
+    this.searchByAssignee.setValue('');
+    this.store.dispatch(GetTasksByReporter({ reporterId }));
+  }
+
+  clearFilters() {
+    this.searchByReporter.setValue('');
+    this.searchByAssignee.setValue('');
+    this.store.dispatch(GetTasks());
   }
 
 }

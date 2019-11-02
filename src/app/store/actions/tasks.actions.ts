@@ -3,6 +3,8 @@ import { ITask } from '../models/task';
 
 enum TasksActions {
   GetTasks = '[Get Tasks] Dashboard',
+  GetTasksByAssignee = '[Get Tasks By Assignee] Dashboard',
+  GetTasksByReporter = '[Get Tasks By Reporter] Dashboard',
   TasksLoaded = '[Tasks Loaded] Dashboard',
   GetTask = '[Get Task] Task-info',
   TaskLoaded = '[Task Loaded] Task-info',
@@ -16,6 +18,16 @@ enum TasksActions {
 
 export const GetTasks = createAction(
   TasksActions.GetTasks
+);
+
+export const GetTasksByAssignee = createAction(
+  TasksActions.GetTasksByAssignee,
+  props<{ assigneeId: string }>()
+);
+
+export const GetTasksByReporter = createAction(
+  TasksActions.GetTasksByReporter,
+  props<{ reporterId: string }>()
 );
 
 export const TasksLoaded = createAction(
