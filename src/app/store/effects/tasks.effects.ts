@@ -23,19 +23,9 @@ import { AppState } from '..';
 
 @Injectable()
 export class TasksEffects {
-  wasFiltered = false;
-
   getTasks$ = createEffect(() => this.actions$.pipe(
     ofType(GetTasks.type),
-    mergeMap(() => this.store.pipe(
-      pluck('tasksState', 'tasks'),
-      take(1)
-    )),
     switchMap((storedTasks) => {
-      if (!this.wasFiltered && storedTasks) {
-        return of(TasksDefault());
-      }
-      this.wasFiltered = false;
       return this.jiraService.getTasks().pipe(
           map((res: any[]) => {
             const tasks: ITask[] = res.map((item) => {
@@ -55,7 +45,6 @@ export class TasksEffects {
   getTasksByAssignee$ = createEffect(() => this.actions$.pipe(
     ofType(GetTasksByAssignee.type),
     mergeMap(({ assigneeId }) => {
-      this.wasFiltered = true;
       return this.jiraService.searchTasksByAssigneeId(assigneeId).pipe(
           map((res: any[]) => {
             const tasks: ITask[] = res.map((item) => {
@@ -75,7 +64,6 @@ export class TasksEffects {
   getTasksByReporter$ = createEffect(() => this.actions$.pipe(
     ofType(GetTasksByReporter.type),
     switchMap(({ reporterId }) => {
-      this.wasFiltered = true;
       return this.jiraService.searchTasksByReporterId(reporterId).pipe(
           map((res: any[]) => {
             const tasks: ITask[] = res.map((item) => {

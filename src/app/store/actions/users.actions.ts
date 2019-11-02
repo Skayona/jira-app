@@ -4,10 +4,10 @@ import { IUser } from '../models/user';
 enum UsersActions {
   GetUsers = '[Get Users] Main',
   UsersLoaded = '[Users Loaded] Main',
-  UsersLoadingError = '[Users Loading Error] Main',
   GetUser = '[Get User] Main',
+  AddUser = '[Add User] Login',
   UserLoaded = '[User Loaded] Main',
-  UserLoadingError = '[User Loading Error] Main',
+  UsersError = '[Users Error] Main',
   UsersDefault = '[Tasks Default] Main',
 }
 
@@ -20,8 +20,8 @@ export const UsersLoaded = createAction(
   props<{ users: IUser[] }>()
 );
 
-export const UsersLoadingError = createAction(
-  UsersActions.UsersLoadingError,
+export const UsersError = createAction(
+  UsersActions.UsersError,
   props<{ err: any }>()
 );
 
@@ -30,14 +30,15 @@ export const GetUser = createAction(
   props<{ id: string}>()
 );
 
-export const UserLoaded = createAction(
-  UsersActions.UserLoaded,
+export const AddUser = createAction(
+  UsersActions.AddUser,
   props<{ user: IUser}>()
 );
 
-export const UserLoadingError = createAction(
-  UsersActions.UserLoadingError,
-  props<{ err: any}>()
+
+export const UserLoaded = createAction(
+  UsersActions.UserLoaded,
+  props<{ user: IUser}>()
 );
 
 export const UsersDefault = createAction(

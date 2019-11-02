@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { IUser } from '../store/models/user';
 import { ITask } from '../store/models/task';
-import { IIsueType } from '../store/models/isue-type';
-import { Observable, of } from 'rxjs';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +15,10 @@ export class JiraService {
   ) { }
 
   createUser(user: IUser) {
-    return this.db.collection('users').add({ ...user });
+    return from(this.db.collection('users').add({ ...user }));
   }
 
   updateUser(userId: string, value) {
-    // value.nameToSearch = value.name.toLowerCase();
     return this.db.collection('users').doc(userId).set(value);
   }
 
@@ -33,11 +31,11 @@ export class JiraService {
   }
 
   createTask(task: ITask) {
-    return of(this.db.collection('tasks').add({ ...task }));
+    return from(this.db.collection('tasks').add({ ...task }));
   }
 
   updateTask(taskId: string, task: ITask) {
-    return of(this.db.collection('tasks').doc(taskId).set(task));
+    return from(this.db.collection('tasks').doc(taskId).set(task));
   }
 
   searchTasksByTitle(value) {
@@ -59,7 +57,7 @@ export class JiraService {
   }
 
   deleteTask(taskId: string) {
-    return of(this.db.collection('tasks').doc(taskId).delete());
+    return from(this.db.collection('tasks').doc(taskId).delete());
   }
 
   getTasks() {

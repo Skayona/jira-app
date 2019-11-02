@@ -25,11 +25,11 @@
     </p>
     <p>
       <strong>Assignee</strong>
-      <span>{{ task?.assignee?.name + ' ' + task?.assignee?.familyName || '-' }}</span>
+      <span>{{ task?.assignee?.displayName || '-' }}</span>
     </p>
     <p>
       <strong>Reporter</strong>
-      <span>{{ task?.reporter?.name + ' ' + task?.reporter?.familyName || '-' }}</span>
+      <span>{{ task?.reporter?.displayName || '-' }}</span>
     </p>
   </div>
 </div>

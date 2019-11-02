@@ -1,7 +1,7 @@
 <div class="card" [ngClass]="getCardClass(task?.type)" [tooltip]="task?.type">
   <a [routerLink]="['/', 'task', task?.id]">
     <h6>{{ task?.title }}</h6>
-    <p>Assigned on: {{ task?.assignee?.name + ' ' + task?.assignee?.familyName || '-' }}</p>
+    <p>Assigned on: {{ task?.assignee?.displayName || '-' }}</p>
     <p>Deadline: {{ (task?.deadline | date: 'dd.MM.yyyy') || '-' }}</p>
   </a>
 </div>

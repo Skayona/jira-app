@@ -1,0 +1,14 @@
+<header>
+  <div class="container">
+    <div class="header">
+      <a [routerLink]="['/']">
+        <img src="../assets/Jira Software-blue.svg" alt="JiraApp" width="200" height="26" />
+      </a>
+
+      <div *ngIf="showLogout">
+        <span>{{ (user$ | async)?.displayName }} </span>
+        <button class="ml-3 btn btn-light" (click)="logout()">Log out</button>
+      </div>
+    </div>
+  </div>
+</header>

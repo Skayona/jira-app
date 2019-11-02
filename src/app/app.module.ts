@@ -9,17 +9,18 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { JiraService } from './services/jira.service';
 
-import { LoginComponent } from './pages/login/login.component';
-
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { appState, appEffects } from './store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthService } from './services/auth.service';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,10 +28,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     StoreModule.forRoot(appState),
     EffectsModule.forRoot(appEffects)
   ],
-  providers: [JiraService],
+  providers: [
+    JiraService,
+    AuthService,
+  ],
   bootstrap: [AppComponent],
   entryComponents: []
 })

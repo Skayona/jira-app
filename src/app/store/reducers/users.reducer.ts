@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { IUser } from '../models/user';
-import { GetUsers, UsersLoaded, UsersLoadingError, GetUser, UserLoaded, UserLoadingError, UsersDefault } from '../actions/users.actions';
+import { GetUsers, UsersLoaded, UsersError, GetUser, UserLoaded, UsersDefault } from '../actions/users.actions';
 
 export interface UsersReducerState {
   users: IUser[];
@@ -30,7 +30,7 @@ export const usersReducerState = createReducer(initialState,
       users: payload.users
     };
   }),
-  on(UsersLoadingError, (state, payload) => {
+  on(UsersError, (state, payload) => {
     return {
       ...state,
       loading: false,
@@ -48,13 +48,6 @@ export const usersReducerState = createReducer(initialState,
       ...state,
       loading: false,
       user: payload.user
-    };
-  }),
-  on(UserLoadingError, (state, payload) => {
-    return {
-      ...state,
-      loading: false,
-      error: payload.err
     };
   }),
   on(UsersDefault, (state) => {

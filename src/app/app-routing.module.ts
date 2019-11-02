@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { SearchResultsComponent } from './pages/search-results/search-results.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
 
 
 const routes: Routes = [{
@@ -10,13 +10,16 @@ const routes: Routes = [{
   redirectTo: 'dashboard'
 }, {
   path: 'dashboard',
-  loadChildren: './pages/dashboard/dashboard.module#DashboardModule'
+  loadChildren: './pages/dashboard/dashboard.module#DashboardModule',
+  canActivate: [AuthGuard]
 }, {
   path: 'task/:taskId',
-  loadChildren: './pages/task-info/task-info.module#TaskInfoModule'
+  loadChildren: './pages/task-info/task-info.module#TaskInfoModule',
+  canActivate: [AuthGuard]
 }, {
   path: 'login',
-  component: LoginComponent
+  loadChildren: './pages/login/login.module#LoginModule',
+  canActivate: [LoginGuard]
 }];
 
 @NgModule({

@@ -1,8 +1,9 @@
 <app-dashboard-nav
   [users]="users$ | async"
+  [user]="user$ | async"
 ></app-dashboard-nav>
-<app-dashboard-table
+<app-dashboard-table *ngIf="tasks$ | async as tasks"
   [loading]="loading$ | async"
-  [tasks]="tasks$ | async"
+  [tasks]="tasks"
   [error]="error$ | async"
 ></app-dashboard-table>

@@ -5,7 +5,15 @@ import { JiraService } from 'src/app/services/jira.service';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '..';
-import { GetUsers, UsersDefault, UsersLoaded, UsersLoadingError, GetUser, UserLoaded, UserLoadingError } from '../actions/users.actions';
+import {
+  GetUsers,
+  UsersDefault,
+  UsersLoaded,
+  GetUser,
+  UserLoaded,
+  UsersError,
+  AddUser,
+} from '../actions/users.actions';
 import { IUser } from '../models/user';
 
 
@@ -13,14 +21,7 @@ import { IUser } from '../models/user';
 export class UsersEffect {
   getUsers$ = createEffect(() => this.actions$.pipe(
     ofType(GetUsers.type),
-    mergeMap(() => this.store.pipe(
-      pluck('usersState', 'users'),
-      take(1)
-    )),
     switchMap((storedUsers) => {
-      if (storedUsers) {
-        return of(UsersDefault());
-      }
       return this.jiraService.getUsers().pipe(
           map((res: any[]) => {
             const users: IUser[] = res.map((item) => {
@@ -31,7 +32,7 @@ export class UsersEffect {
             });
             return UsersLoaded({ users });
           }),
-          catchError((err) => of(UsersLoadingError(err)))
+          catchError((err) => of(UsersError(err)))
         );
       })
     )
@@ -49,7 +50,17 @@ export class UsersEffect {
           };
           return UserLoaded({ user });
         }),
-        catchError((err) => of(UserLoadingError(err)))
+        catchError((err) => of(UsersError(err)))
+      ))
+    )
+  );
+
+  addUser$ = createEffect(() => this.actions$.pipe(
+    ofType(AddUser.type),
+    mergeMap(({ user }) => this.jiraService.createUser(user)
+      .pipe(
+        map(({ id }) => GetUser({ id })),
+        catchError((err) => of(UsersError(err)))
       ))
     )
   );

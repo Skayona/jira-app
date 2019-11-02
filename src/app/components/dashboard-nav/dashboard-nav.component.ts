@@ -70,7 +70,7 @@ export class DashboardNavComponent implements OnInit {
     const initialState = {
       title: 'Create task',
       users: this.users,
-      reporter: this.user
+      user: this.user
     };
     this.modalRef = this.modalService.show(TaskModalComponent,
       { initialState }
@@ -103,5 +103,4 @@ export class DashboardNavComponent implements OnInit {
     this.searchByAssignee.setValue('');
     this.store.dispatch(GetTasks());
   }
-
 }

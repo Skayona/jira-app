@@ -17,22 +17,38 @@
   </div>
 </div>
 <div class="filters">
-  <button type="button" class="btn btn-outline-primary">
+  <button
+    type="button"
+    class="btn"
+    [ngClass]="searchByAssignee?.value === user?.id ? 'btn-primary' : 'btn-outline-primary'"
+    (click)="searchByAssignee.setValue(user?.id)"
+  >
     Only My Issues
   </button>
-  <button type="button" class="btn btn-outline-primary">
+  <button
+    type="button"
+    class="btn"
+    [ngClass]="searchByReporter?.value === user?.id ? 'btn-primary' : 'btn-outline-primary'"
+    (click)="searchByReporter.setValue(user?.id)"
+    >
     Assigned by Me
   </button>
   <div class="form-group" *ngIf="users">
     <label for="user-issues">Assignee</label>
     <select class="form-control" id="user-issues" [formControl]="searchByAssignee">
-      <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+      <option value="" disabled></option>
+      <ng-container *ngFor="let u of users">
+        <option [value]="u.id" *ngIf="u.id !== user?.id">{{ u.displayName || '-' }}</option>
+      </ng-container>
     </select>
   </div>
   <div class="form-group" *ngIf="users">
     <label for="user-assigned">Reporter</label>
     <select class="form-control" id="user-assigned" [formControl]="searchByReporter">
-      <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+      <option value="" disabled></option>
+      <ng-container *ngFor="let u of users">
+        <option [value]="u.id" *ngIf="u.id !== user?.id">{{ u.displayName || '-' }}</option>
+      </ng-container>
     </select>
   </div>
   <button type="button" class="btn btn-secondary" (click)="clearFilters()">Clear filters</button>

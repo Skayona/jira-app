@@ -68,8 +68,7 @@ export class TaskModalComponent implements OnInit {
     if (!this.task) {
       const initFormValues = {
         label: ILabel.TO_DO,
-        // reporter: this.user,
-        reporter: 'ScTkZQTcmg4OzKC3wYPX'
+        reporter: this.user.id,
       };
 
       this.form.patchValue(initFormValues);
