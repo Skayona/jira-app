@@ -1,11 +1,19 @@
 <div class="mb-3 text-right">
   <button class="btn btn-success" (click)="createTask()">Create new task</button>
 </div>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Search by Task name" aria-label="Search by Task name"
-    aria-describedby="button-addon2">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+<div class="search mb-3">
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Search by Task name"
+    aria-label="Search by Task name"
+    [formControl]="searchQuery"
+  >
+  <div class="search-results" *ngIf="searchQuery.value && (searchResults$ | async) as searchResults">
+    <app-search-results
+      [searchResults]="searchResults"
+      (clearResults)="clearSearchResults()"
+    ></app-search-results>
   </div>
 </div>
 <div class="filters">
@@ -19,14 +27,14 @@
     <label for="user-issues">User Issues</label>
     <select class="form-control" id="user-issues">
       <option disabled>select user</option>
-      <option [value]="users.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+      <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
     </select>
   </div>
   <div class="form-group" *ngIf="users">
     <label for="user-assigned">Assigned by User</label>
     <select class="form-control" id="user-assigned">
       <option disabled>select user</option>
-      <option [value]="users.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
+      <option [value]="user.id" *ngFor="let user of users">{{ user.name + ' '+ user.familyName || '-' }}</option>
     </select>
   </div>
   <button type="button" class="btn btn-secondary">Clear filters</button>

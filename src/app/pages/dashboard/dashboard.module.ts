@@ -9,6 +9,8 @@ import { TaskCardComponent } from 'src/app/components/task-card/task-card.compon
 import { TooltipModule, ModalModule } from 'ngx-bootstrap';
 import { LoadingModule } from 'src/app/components/loading/loading.module';
 import { TaskModalModule } from 'src/app/components/task-modal/task-modal.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchResultsComponent } from 'src/app/components/search-results/search-results.component';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { TaskModalModule } from 'src/app/components/task-modal/task-modal.module
     DashboardNavComponent,
     DashboardTableComponent,
     TaskCardComponent,
+    SearchResultsComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +28,8 @@ import { TaskModalModule } from 'src/app/components/task-modal/task-modal.module
     ModalModule.forRoot(),
     LoadingModule,
     TaskModalModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   entryComponents: []
 })

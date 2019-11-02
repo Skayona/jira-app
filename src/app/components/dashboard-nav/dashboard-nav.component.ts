@@ -5,6 +5,11 @@ import { TaskModalComponent } from '../task-modal/task-modal.component';
 import { AppState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { CreateTask } from 'src/app/store/actions/tasks.actions';
+import { FormControl } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ITask } from 'src/app/store/models/task';
+import { JiraService } from 'src/app/services/jira.service';
 
 @Component({
   selector: 'app-dashboard-nav',
@@ -16,13 +21,29 @@ export class DashboardNavComponent implements OnInit {
   @Input() user: IUser;
 
   modalRef: BsModalRef;
+  searchQuery: FormControl;
+  searchResults$: Observable<ITask[]>;
 
   constructor(
     private modalService: BsModalService,
-    private store: Store<AppState>
-  ) { }
+    private store: Store<AppState>,
+    private jiraService: JiraService
+  ) {
+    this.searchQuery = new FormControl('');
+  }
 
   ngOnInit() {
+    this.searchResults$ = this.searchQuery.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((query) => this.jiraService.searchTasksByTitle(query)),
+      map((res) => res.map((item) => {
+        return {
+          ...item.payload.doc.data(),
+          id: item.payload.doc.id
+        } as ITask;
+      }))
+    );
   }
 
   createTask() {
@@ -41,6 +62,10 @@ export class DashboardNavComponent implements OnInit {
         this.modalRef.hide();
       }
     });
+  }
+
+  clearSearchResults() {
+    this.searchQuery.setValue('');
   }
 
 }

@@ -37,20 +37,14 @@ export class JiraService {
   }
 
   updateTask(taskId: string, task: ITask) {
-    console.log(task);
-
     return of(this.db.collection('tasks').doc(taskId).set(task));
   }
 
-  // searchUsers(searchValue){
-  //   return this.db.collection('users',ref => ref.where('nameToSearch', '>=', searchValue)
-  //     .where('nameToSearch', '<=', searchValue + '\uf8ff'))
-  //     .snapshotChanges()
-  // }
-
-  // searchUsersByAge(value){
-  //   return this.db.collection('users',ref => ref.orderBy('age').startAt(value)).snapshotChanges();
-  // }
+  searchTasksByTitle(value) {
+    return this.db.collection('tasks', (ref) => ref.where('title', '>=', value)
+      .where('title', '<=', value + '\uf8ff'))
+      .snapshotChanges();
+  }
 
   deleteTask(taskId: string) {
     return of(this.db.collection('tasks').doc(taskId).delete());

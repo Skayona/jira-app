@@ -10,7 +10,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { JiraService } from './services/jira.service';
 
 import { LoginComponent } from './pages/login/login.component';
-import { SearchResultsComponent } from './pages/search-results/search-results.component';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -21,7 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     AppComponent,
     LoginComponent,
-    SearchResultsComponent,
   ],
   imports: [
     BrowserModule,

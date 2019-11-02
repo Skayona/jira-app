@@ -17,7 +17,7 @@ export class DashboardTableComponent implements OnInit {
   ngOnInit() {
   }
 
-  getTasks(tasks, type: ILabel) {
+  getTasks(tasks, type) {
     return tasks && tasks.filter((task) => task.label === type);
   }
 
